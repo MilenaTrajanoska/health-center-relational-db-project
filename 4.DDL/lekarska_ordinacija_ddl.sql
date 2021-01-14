@@ -164,4 +164,3 @@ insert into terapija(broj_na_izveshtaj, broj_na_pregled, terapija) values (1, 1,
                                                                           (3, 3, 'cefotaxime'),
                                                                           (4, 4, '/'),
                                                                           (5, 5, '/');
-select * from specijalizacija;
