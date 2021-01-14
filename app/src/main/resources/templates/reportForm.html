@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+
+    <title>Health Center</title>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="Tooplate">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="css/owl.carousel.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+
+    <link rel="stylesheet" href="css/tooplate-style.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+</head>
+<body id="top" data-spy="scroll" data-target=".navbar-collapse" data-offset="50">
+<header>
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-4 col-sm-5">
+                <p>Добредојдовте</p>
+            </div>
+
+            <div class="col-md-8 col-sm-7 text-align-right">
+                <span class="phone-icon"><i class="fa fa-phone"></i> +38970123456</span>
+                <span class="date-icon"><i class="fa fa-calendar-plus-o"></i> 08:00 - 16:00 (Пон-Пет)</span>
+                <span class="email-icon"><i class="fa fa-envelope-o"></i> <a href="#">info@healthcare.com</a></span>
+            </div>
+
+        </div>
+    </div>
+</header>
+
+
+<section class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container">
+
+        <div class="navbar-header">
+            <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon icon-bar"></span>
+                <span class="icon icon-bar"></span>
+                <span class="icon icon-bar"></span>
+            </button>
+
+            <a th:href="@{/}" class="navbar-brand"><i class="fa fa-h-square"></i>ealth Center</a>
+        </div>
+
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a th:href="@{/}" class="smoothScroll">Почетна</a></li>
+                <li><a th:href="@{/dailyExaminations}" class="smoothScroll">Дневни прегледи</a></li>
+                <li><a th:href="@{/patientReports}" class="smoothScroll">Историјат на дијагнози</a></li>
+                <li class="appointment-btn"><a th:href="@{/appointment}">Закажи преглед</a></li>
+                <li class="appointment-btn"><a th:href="@{/createReferral}">Креирај упат</a></li>
+            </ul>
+        </div>
+
+    </div>
+
+    <section id="appointment" data-stellar-background-ratio="3">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-6 col-sm-6">
+                    <img src="images/medical-report.png" class="img-responsive" alt="">
+                </div>
+
+                <div class="col-md-6 col-sm-6">
+                    <form id="appointment-form" role="form" method="post" th:object="${report}" th:action="@{/createReport}">
+
+                        <div class="section-title wow fadeInUp" data-wow-delay="0.4s">
+                            <h2>Креирај извештај</h2>
+                        </div>
+
+                        <div class="wow fadeInUp" data-wow-delay="0.8s">
+                            <div class="col-md-6 col-sm-6">
+                                <label for="reason">Број на преглед</label>
+                                <textarea name="reason" id="reason" th:field="*{broj_na_pregled}" class="form-control"></textarea>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <label for="date">Датум </label>
+                                <input type="date" name="date" value="" id="date" th:field="*{date}" class="form-control">
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <label for="type">Тип на извештај</label>
+                                <select class="form-control" th:field="*{type}">
+                                    <option value="specijalisticki" selected>специјалистички</option>
+                                    <option value="opsht">општ</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <label for="anamnesis">Анамнеза</label>
+                                <textarea name="anamnesis" id="anamnesis" th:field="*{anamnesis}" class="form-control"></textarea>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <label for="medicalFinding">Наод</label>
+                                <textarea name="medicalFinding" id="medicalFinding" th:field="*{medicalFinding}" class="form-control"></textarea>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <label for="therapies">Терапија</label> <br>
+                                Додади терапија <button type="button" id="addTherapy"><i class="fa fa-plus"></i></button>
+                                <br>
+                                <div id="therapies">
+                                    <br>
+                                </div>
+                                <br>
+                                Избриши терапија <button type="button" id="removeTherapy"><i class="fa fa-minus"></i></button>
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <label for="therapies">Дијагноза</label> <br>
+                                Додади дијагноза <button type="button" id="addDiagnosis"><i class="fa fa-plus"></i></button>
+                                <br>
+                                <div id="diagnoses">
+                                    <br>
+
+                                </div>
+                                <br>
+                                Избриши дијагноза <button type="button" id="removeDiagnosis"><i class="fa fa-minus"></i></button>
+                            </div>
+                            <br>
+                            <div class="col-md-12 col-sm-12">
+                                <br>
+                                <input style="background-color:#a5c422" type="submit" class="form-control" id="cf-submit" name="submit" value="Креирај">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <p th:if="${error}" style="color:red">Настана грешка при закажувањето.</p>
+                <p th:if="${invalidParameters}" style="color:red">Невалидни податоци!</p>
+            </div>
+        </div>
+    </section>
+
+
+</section>
+<script>
+ $(document).ready(function(){
+    var therapyNum = 0;
+    var diagnosisNum = 0;
+    $("#addTherapy").click(function(){
+        $("#therapies").append('<input type="text" name="therapies[' + therapyNum + ']" id="therapy[' + therapyNum+ ']">');
+        therapyNum++;
+    });
+    $("#removeTherapy").click(function(){
+        $('#therapies input').last().remove();
+        if(therapyNum>0){
+            therapyNum--;
+        }
+    });
+
+    $("#addDiagnosis").click(function(){
+        $("#diagnoses").append('<input type="text" name="diagnoses[' + diagnosisNum + ']" id="diagnosis[' + diagnosisNum+ ']">');
+        diagnosisNum++;
+    });
+    $("#removeDiagnosis").click(function(){
+        $('#diagnoses input').last().remove();
+        if(diagnosisNum>0){
+            diagnosisNum--;
+        }
+    });
+ });
+</script>
+</body>
+</html>

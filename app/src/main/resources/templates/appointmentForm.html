@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+
+    <title>Health Center</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="Tooplate">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="css/owl.carousel.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+
+    <link rel="stylesheet" href="css/tooplate-style.css">
+
+</head>
+<body id="top" data-spy="scroll" data-target=".navbar-collapse" data-offset="50">
+<header>
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-4 col-sm-5">
+                <p>Добредојдовте</p>
+            </div>
+
+            <div class="col-md-8 col-sm-7 text-align-right">
+                <span class="phone-icon"><i class="fa fa-phone"></i> +38970123456</span>
+                <span class="date-icon"><i class="fa fa-calendar-plus-o"></i> 08:00 - 16:00 (Пон-Пет)</span>
+                <span class="email-icon"><i class="fa fa-envelope-o"></i> <a href="#">info@healthcare.com</a></span>
+            </div>
+
+        </div>
+    </div>
+</header>
+
+<section class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container">
+
+        <div class="navbar-header">
+            <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon icon-bar"></span>
+                <span class="icon icon-bar"></span>
+                <span class="icon icon-bar"></span>
+            </button>
+
+            <a th:href="@{/}" class="navbar-brand"><i class="fa fa-h-square"></i>ealth Center</a>
+        </div>
+
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a th:href="@{/}" class="smoothScroll">Почетна</a></li>
+                <li><a th:href="@{/dailyExaminations}" class="smoothScroll">Дневни прегледи</a></li>
+                <li><a th:href="@{/patientReports}" class="smoothScroll">Историјат на дијагнози</a></li>
+                <li class="appointment-btn"><a th:href="@{/createReferral}">Креирај упат</a></li>
+                <li class="appointment-btn"><a th:href="@{/createReport}">Креирај извештај</a></li>
+            </ul>
+        </div>
+
+    </div>
+
+    <section id="appointment" data-stellar-background-ratio="3">
+        <div class="container">
+            <div class="row">
+
+                <div class="col-md-6 col-sm-6">
+                    <img src="images/doctor.png" class="img-responsive" alt="">
+                </div>
+
+                <div class="col-md-6 col-sm-6">
+                    <form id="appointment-form" role="form" method="post" th:object="${appointment}" th:action="@{/appointment}">
+                        <div class="section-title wow fadeInUp" data-wow-delay="0.4s">
+                            <h2>Закажи преглед</h2>
+                        </div>
+
+                        <div class="wow fadeInUp" data-wow-delay="0.8s">
+                            <div class="col-md-6 col-sm-6">
+                                <label for="examinationType">Тип на преглед</label>
+                                <select class="form-control" th:field="*{examinationType}">
+                                    <option value="redoven" selected>редовен</option>
+                                    <option value="kontrolen">контролен</option>
+                                </select>
+                            </div>
+
+                            <input hidden th:field="*{id}">
+                            <div class="col-md-6 col-sm-6">
+                                <label for="date">Датум</label>
+                                <input type="date" name="date" value="" id="date" th:field="*{date}" class="form-control">
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <label for="date">Време на почеток на термин</label>
+                                <input type="text" name="startTime" id="startTime" th:field="*{startTime}" class="form-control" placeholder="hh:mm:ss">
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <label for="date">Време на крај на термин</label>
+                                <input type="text" name="endTime" id="endTime" th:field="*{endTime}" class="form-control" placeholder="hh:mm:ss">
+                            </div>
+                            <div class="col-md-6 col-sm-6">
+                                <label for="doctor" >Доктор</label>
+                                <select th:field="*{doctor}" class="form-control">
+                                    <option th:each="doctor: ${allDoctors}" th:if="${doctor.doctor != null}" th:value="${doctor.EMBG}" th:text="${doctor.name + ' ' + doctor.surname}"></option>
+                                </select>
+                            </div>
+                            <div class="col-md-12 col-sm-12">
+                                <label for="embg">Матичен број на пациент</label>
+                                <input type="text" class="form-control" id="embg" name="embg" th:field="*{patient.EMBG}" placeholder="ЕМБГ">
+                                <input style="background-color:#a5c422" type="submit" class="form-control" id="cf-submit" name="submit" value="Закажи">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <p th:if="${error}" style="color:red">Настана грешка при закажувањето.</p>
+                <p th:if="${invalidParameters}" style="color:red">Невалидни податоци!</p>
+            </div>
+        </div>
+    </section>
+
+
+</section>
+
+</body>
+</html>

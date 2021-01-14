@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+
+<head>
+
+    <title>Health Center</title>
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+    <meta name="author" content="Tooplate">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/animate.css">
+    <link rel="stylesheet" href="css/owl.carousel.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+
+    <link rel="stylesheet" href="css/tooplate-style.css">
+    <style>
+.header {
+   background-color: #a5c422;
+   color: white;
+   font-size: 1.5em;
+   padding: 1rem;
+   text-align: center;
+   text-transform: uppercase;
+}
+
+.table-users {
+   border: 1px solid ##a5c422;
+   border-radius: 10px;
+   box-shadow: 3px 3px 0 rgba(0,0,0,0.1);
+   max-width: calc(100% - 2em);
+   margin: 1em auto;
+   overflow: hidden;
+   width: 800px;
+}
+
+.responsive-table {
+   width: 100%;
+   border: 1px solid #398B93;
+   border-collapse: collapse;
+ }
+
+ .responsive-table thead  td, .responsive-table thead th {
+      color: white;
+      padding: 10px;
+      border: 1px solid #398B93;
+ }
+
+ .responsive-table td{
+      text-align: center;
+      vertical-align: middle;
+      border: 1px solid #398B93;
+ }
+
+ td:last-child {
+         font-size: 0.95em;
+         line-height: 1.4;
+         text-align: center;
+ }
+
+ thead th {
+      background-color:#a5c422;
+      font-weight: 300;
+      border: 1px solid #398B93;
+ }
+
+ .responsive-table tbody th {
+    border: 1px solid #398B93;
+    text-align: center;
+ }
+
+ tbody tr:nth-child(even) { background-color: white; }
+ tbody tr::nth-child(odd) { background-color: ##a5c422;}
+
+</style>
+
+</head>
+<body id="top" data-spy="scroll" data-target=".navbar-collapse" data-offset="50">
+
+<header>
+    <div class="container">
+        <div class="row">
+
+            <div class="col-md-4 col-sm-5">
+                <p>Добредојдовте</p>
+            </div>
+
+            <div class="col-md-8 col-sm-7 text-align-right">
+                <span class="phone-icon"><i class="fa fa-phone"></i> +38970123456</span>
+                <span class="date-icon"><i class="fa fa-calendar-plus-o"></i> 08:00 - 16:00 (Пон-Пет)</span>
+                <span class="email-icon"><i class="fa fa-envelope-o"></i> <a href="#">info@healthcare.com</a></span>
+            </div>
+
+        </div>
+    </div>
+</header>
+
+
+<section class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container">
+
+        <div class="navbar-header">
+            <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon icon-bar"></span>
+                <span class="icon icon-bar"></span>
+                <span class="icon icon-bar"></span>
+            </button>
+
+            <a th:href="@{/}" class="navbar-brand"><i class="fa fa-h-square"></i>ealth Center</a>
+        </div>
+
+        <div class="collapse navbar-collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a th:href="@{/}" class="smoothScroll">Почетна</a></li>
+                <li><a th:href="@{/dailyExaminations}" class="smoothScroll">Дневни прегледи</a></li>
+                <li class="appointment-btn"><a th:href="@{/appointment}">Закажи преглед</a></li>
+                <li class="appointment-btn"><a th:href="@{/createReferral}">Креирај упат</a></li>
+                <li class="appointment-btn"><a th:href="@{/createReport}">Креирај извештај</a></li>
+            </ul>
+        </div>
+
+    </div>
+</section>
+
+
+<h3 class="header">Историја на дијагнози за пациенти</h3>
+<br>
+<br>
+<div class="row">
+<div class="col-sm-2">
+    <img src="images/medical-report.png" style="min-height:70%;display:block;pading-left:5%" alt="">
+</div>
+    <div class="col-lg-10">
+<div class="table-users">
+    <table class="responsive-table">
+        <thead>
+        <tr>
+            <th scope="col">Име на пациент</th>
+            <th scope="col">Број на здравствена легитимација на пациент</th>
+            <th scope="col">Број на преглед</th>
+            <th scope="col">Датум на преглед</th>
+            <th scope="col">Тип на извештај</th>
+            <th scope="col">Дијагноза</th>
+            <th scope="col">Терапија</th>
+        </tr>
+        </thead>
+        <tfoot>
+        </tfoot>
+        <tbody>
+        <tr th:each="record:${list}">
+            <td th:text="${record.fullName}"></td>
+            <td th:text="${record.medicalCardID}"></td>
+            <th scope="row" th:text="${record.examinationId}"></th>
+            <td th:text="${record.examinationDate}"></td>
+            <td th:text="${record.reportType}"></td>
+
+            <td th:text="${record.diagnosis}"></td>
+            <td th:text="${record.therapy}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+    </div>
+</div>
+</body>
+</html>
