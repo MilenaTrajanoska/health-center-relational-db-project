@@ -25,9 +25,7 @@ begin;
 update pregled set vreme_kraj=now()::time where broj_na_pregled=11;
 update upat set broj_na_pregled=11 where broj_na_upat = 20;
 commit;
-
-select * from pregled;
-
+         
 --zakazuvanje pregled
 begin;
 insert into pregled(broj_na_pregled, tip, datum, vreme_pochetok, vreme_kraj, embg_pacient, embg_doktor)
@@ -56,10 +54,6 @@ join pacient pac on pac.embg = p.embg_pacient
 join chovek c on c.embg = pac.embg
 join terapija as t on t.broj_na_izveshtaj=i.broj_na_izveshtaj and t.broj_na_pregled=p.broj_na_pregled;
 
-select * from pregled;
-select * from izveshtaj;
-select * from dijagnozi_za_pacienti;
-
 create view pregledi_za_tekovniot_den as
 select row_number() over (order by vreme_pochetok, vreme_kraj) as id, pregled.broj_na_pregled, pregled.tip as tip_na_pregled, pregled.datum, pregled.vreme_pochetok, pregled.vreme_kraj,
         zdravstvena_legitimacija, c2.ime || ' ' || c2.prezime as ime_pacient,
@@ -71,37 +65,3 @@ join pacient p on p.embg = pregled.embg_pacient
 join chovek c2 on c2.embg = p.embg
 where datum=now()::date
 order by vreme_pochetok, vreme_kraj;
-
-select * from dijagnozi_za_pacienti;
-select * from pregledi_za_tekovniot_den;
-
-insert into pregled(tip, datum, vreme_pochetok, vreme_kraj, embg_pacient, embg_doktor)
-values ('kontrolen', now()::date, (now()- interval '3 hours')::time, now()::time,'0811011450312', '1203976455123');
-
-select * from izveshtaj;
-
-delete from izveshtaj where broj_na_izveshtaj=12;
-
-select* from doktor
-join chovek on doktor.embg = chovek.embg;
-
-
-insert into pregled(tip, datum, vreme_pochetok, vreme_kraj, embg_pacient, embg_doktor)
-values ('kontrolen', now()::date, (now() + interval '3 hours')::time, (now() + interval '3 hours 30 minutes')::time,
-        '0502011450312','0707963450012'),
-       ('kontrolen', now()::date, (now() - interval '2 hours')::time, (now() + interval '-2 hours +30 minutes')::time,
-        '2607003450321','2404968450003'),
-        ('redoven', now()::date, (now() + interval '4 hours')::time, (now() + interval '4 hours +45 minutes')::time,
-        '0305958455234','0211956450023');
-
-select * from pregled;
-
-select * from izveshtaj;
-select *
-from dijagnozi_za_pacienti;
-
-select * from pacient;
-
-select * from terapija;
-
-select * from pregled;
